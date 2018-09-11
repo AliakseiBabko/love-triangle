@@ -4,22 +4,25 @@
  */
 module.exports = function getLoveTrianglesCount(preferences = []) {
   // your implementation
-  var a, b, c;
-  var NInTriangles = 0;
-  l = preferences.length;
-  for (i = 0; i < l; i++) {
-    if ((l >= preferences[i]) && (preferences[i] > 0)) {
-      a = preferences[i];
-      if ((l >= preferences[a-1]) && (preferences[a-1] > 0)) {
-        b = preferences[a-1];
-        if ((l >= preferences[b-1]) && (preferences[b-1] > 0)) {
-        c = preferences[b-1];
-        if ((i+1)==c) {
-          NInTriangles++;
+  let result, firstPerson, secondPerson, thirdPerson, PersonsInTriangles = 0, NumberOfPersons = preferences.length;
+  
+  function checkValidity (person) {
+    return (NumberOfPersons >= person) && (person > 0);
+  }
+  
+  for (let i = 0; i < NumberOfPersons; i++) {
+    if (checkValidity (preferences[i])) {
+      firstPerson = preferences[i]; 
+      if (checkValidity (preferences[firstPerson - 1])) {
+        secondPerson = preferences[firstPerson - 1];
+        if (checkValidity (preferences[secondPerson - 1])) {
+          thirdPerson = preferences[secondPerson - 1];
+          if ((i + 1) === thirdPerson) {
+            PersonsInTriangles++;
+          }
         }
       }
-      }
-      }
     }
-    return Math.floor(NInTriangles/3);
-  };
+  }
+  return Math.floor(PersonsInTriangles / 3);
+};
